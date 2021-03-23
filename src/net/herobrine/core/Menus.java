@@ -26,7 +26,7 @@ public class Menus {
 		oitc.setItemMeta(oitcMeta);
 		ItemStack sg = new ItemStack(Material.DIAMOND_SWORD, 1);
 		ItemMeta sgMeta = sg.getItemMeta();
-		sgMeta.setDisplayName(ChatColor.AQUA + "Survival Games");
+		sgMeta.setDisplayName(ChatColor.AQUA + "Battle Clash");
 		sg.setItemMeta(sgMeta);
 		ItemStack bw = new ItemStack(Material.BED, 1);
 		ItemMeta bwMeta = bw.getItemMeta();

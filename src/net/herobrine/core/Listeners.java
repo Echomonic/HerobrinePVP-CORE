@@ -340,11 +340,8 @@ public class Listeners implements Listener {
 			if (e.getCurrentItem() != null) {
 				switch (e.getCurrentItem().getType()) {
 				case DIAMOND_SWORD:
-					player.sendMessage(
-							ChatColor.RED + "This game is not currently available! Reason: Not developed yet");
-					// player.sendMessage(
-					// ChatColor.GRAY + "Sending you to a game of " + ChatColor.AQUA + "Survival
-					// Games");
+					GameCoreMain.getInstance().startQueue(player, Games.CLASH_ROYALE);
+
 					break;
 				case BOW:
 					player.sendMessage(
