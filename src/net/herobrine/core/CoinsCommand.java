@@ -26,7 +26,8 @@ public class CoinsCommand implements CommandExecutor {
 						try {
 							OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 							int coins = Integer.parseInt(args[2]);
-							if (target.hasPlayedBefore() || target.isOnline()) {
+							if (target.hasPlayedBefore() || target.isOnline()
+									|| HerobrinePVPCore.getFileManager().isUserRegistered(target.getUniqueId())) {
 								HerobrinePVPCore.getFileManager().setCoins(target.getUniqueId(), coins);
 								player.sendMessage(ChatColor.GREEN + "Successfully set "
 										+ HerobrinePVPCore.getFileManager().getRank(target.getUniqueId()).getColor()
@@ -67,7 +68,8 @@ public class CoinsCommand implements CommandExecutor {
 						try {
 							OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 							int coins = Integer.parseInt(args[2]);
-							if (target.hasPlayedBefore() || target.isOnline()) {
+							if (target.hasPlayedBefore() || target.isOnline()
+									|| HerobrinePVPCore.getFileManager().isUserRegistered(target.getUniqueId())) {
 								HerobrinePVPCore.getFileManager().addCoins(target.getUniqueId(), coins);
 								player.sendMessage(ChatColor.GREEN + "Successfully added " + ChatColor.YELLOW + coins
 										+ ChatColor.GREEN + "to "
@@ -108,7 +110,8 @@ public class CoinsCommand implements CommandExecutor {
 						try {
 							OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 							int coins = Integer.parseInt(args[2]);
-							if (target.hasPlayedBefore() || target.isOnline()) {
+							if (target.hasPlayedBefore() || target.isOnline()
+									|| HerobrinePVPCore.getFileManager().isUserRegistered(target.getUniqueId())) {
 								HerobrinePVPCore.getFileManager().removeCoins(target.getUniqueId(), coins);
 
 								player.sendMessage(ChatColor.GREEN + "Successfully removed " + ChatColor.YELLOW + coins
@@ -150,7 +153,8 @@ public class CoinsCommand implements CommandExecutor {
 					if (args[0].equalsIgnoreCase("get")) {
 						OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
-						if (target.hasPlayedBefore() || target.isOnline()) {
+						if (target.hasPlayedBefore() || target.isOnline()
+								|| HerobrinePVPCore.getFileManager().isUserRegistered(target.getUniqueId())) {
 							player.sendMessage(
 									HerobrinePVPCore.getFileManager().getRank(target.getUniqueId()).getColor()
 											+ target.getName() + "'s" + ChatColor.YELLOW + " coins: "
@@ -178,7 +182,8 @@ public class CoinsCommand implements CommandExecutor {
 					try {
 						OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 						int coins = Integer.parseInt(args[2]);
-						if (target.hasPlayedBefore() || target.isOnline()) {
+						if (target.hasPlayedBefore() || target.isOnline()
+								|| HerobrinePVPCore.getFileManager().isUserRegistered(target.getUniqueId())) {
 							HerobrinePVPCore.getFileManager().setCoins(target.getUniqueId(), coins);
 							sender.sendMessage(ChatColor.GREEN + "Successfully set "
 									+ HerobrinePVPCore.getFileManager().getRank(target.getUniqueId()).getColor()
@@ -214,7 +219,8 @@ public class CoinsCommand implements CommandExecutor {
 					try {
 						OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 						int coins = Integer.parseInt(args[2]);
-						if (target.hasPlayedBefore() || target.isOnline()) {
+						if (target.hasPlayedBefore() || target.isOnline()
+								|| HerobrinePVPCore.getFileManager().isUserRegistered(target.getUniqueId())) {
 							HerobrinePVPCore.getFileManager().addCoins(target.getUniqueId(), coins);
 							sender.sendMessage(ChatColor.GREEN + "Successfully added " + ChatColor.YELLOW + coins
 									+ ChatColor.GREEN + " to "
@@ -253,7 +259,8 @@ public class CoinsCommand implements CommandExecutor {
 					try {
 						OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 						int coins = Integer.parseInt(args[2]);
-						if (target.hasPlayedBefore() || target.isOnline()) {
+						if (target.hasPlayedBefore() || target.isOnline()
+								|| HerobrinePVPCore.getFileManager().isUserRegistered(target.getUniqueId())) {
 							HerobrinePVPCore.getFileManager().removeCoins(target.getUniqueId(), coins);
 							sender.sendMessage(ChatColor.GREEN + "Successfully removed " + ChatColor.YELLOW + coins
 									+ ChatColor.GREEN + " from "
@@ -293,7 +300,8 @@ public class CoinsCommand implements CommandExecutor {
 				if (args[0].equalsIgnoreCase("get")) {
 					OfflinePlayer target = Bukkit.getOfflinePlayer(args[1]);
 
-					if (target.hasPlayedBefore() || target.isOnline()) {
+					if (target.hasPlayedBefore() || target.isOnline()
+							|| HerobrinePVPCore.getFileManager().isUserRegistered(target.getUniqueId())) {
 						sender.sendMessage(HerobrinePVPCore.getFileManager().getRank(target.getUniqueId()).getColor()
 								+ target.getName() + "'s " + ChatColor.YELLOW + " coins: "
 								+ HerobrinePVPCore.getFileManager().getCoins(target.getUniqueId()));

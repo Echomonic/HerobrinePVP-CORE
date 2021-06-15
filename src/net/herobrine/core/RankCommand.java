@@ -22,7 +22,8 @@ public class RankCommand implements CommandExecutor {
 
 			if (args.length == 2) {
 				OfflinePlayer target = Bukkit.getOfflinePlayer(args[0]);
-				if (target.hasPlayedBefore() || target.isOnline()) {
+				if (target.hasPlayedBefore() || target.isOnline()
+						|| HerobrinePVPCore.getFileManager().isUserRegistered(target.getUniqueId())) {
 					if (EnumUtils.isValidEnum(Ranks.class, args[1].toUpperCase())) {
 						HerobrinePVPCore.getFileManager().setRank(target.getUniqueId(),
 								Ranks.valueOf(args[1].toUpperCase()));
@@ -32,22 +33,24 @@ public class RankCommand implements CommandExecutor {
 							target.getPlayer().sendMessage(ChatColor.GREEN + "Your rank has been updated to "
 									+ ChatColor.GOLD + Ranks.valueOf(args[1].toUpperCase()));
 							if (target.getPlayer().getScoreboard().getTeam("rank") != null) {
-								if (HerobrinePVPCore.getFileManager().getRank(player).hasPlusColor()) {
+								if (HerobrinePVPCore.getFileManager().getRank(target.getPlayer()).hasPlusColor()) {
 
 									target.getPlayer().getScoreboard().getTeam("rank").setSuffix(HerobrinePVPCore
 											.getFileManager().getRank(target.getPlayer()).getColor()
 											+ HerobrinePVPCore.getFileManager().getRank(target.getPlayer()).getName()
 											+ HerobrinePVPCore.translateString(
-													HerobrinePVPCore.getFileManager().getPlusColor(player.getUniqueId())
+													HerobrinePVPCore.getFileManager().getPlusColor(target.getUniqueId())
 															+ "+"));
 
-									target.getPlayer().setPlayerListName(
-											HerobrinePVPCore.getFileManager().getRank(player).getColor()
-													+ HerobrinePVPCore.getFileManager().getRank(player).getName()
-													+ HerobrinePVPCore.translateString(HerobrinePVPCore.getFileManager()
-															.getPlusColor(player.getUniqueId()) + "+")
-													+ " " + HerobrinePVPCore.getFileManager().getRank(player).getColor()
-													+ player.getName());
+									target.getPlayer().setPlayerListName(HerobrinePVPCore.getFileManager()
+											.getRank(target.getPlayer()).getColor()
+											+ HerobrinePVPCore.getFileManager().getRank(target.getPlayer()).getName()
+											+ HerobrinePVPCore.translateString(
+													HerobrinePVPCore.getFileManager().getPlusColor(target.getUniqueId())
+															+ "+")
+											+ " "
+											+ HerobrinePVPCore.getFileManager().getRank(target.getPlayer()).getColor()
+											+ target.getName());
 								}
 
 								else {
@@ -55,9 +58,10 @@ public class RankCommand implements CommandExecutor {
 											.getFileManager().getRank(target.getPlayer()).getColor()
 											+ HerobrinePVPCore.getFileManager().getRank(target.getPlayer()).getName());
 									target.getPlayer().setPlayerListName(
-											HerobrinePVPCore.getFileManager().getRank(player).getColor()
-													+ HerobrinePVPCore.getFileManager().getRank(player).getName() + " "
-													+ player.getName());
+											HerobrinePVPCore.getFileManager().getRank(target.getPlayer()).getColor()
+													+ HerobrinePVPCore.getFileManager().getRank(target.getPlayer())
+															.getName()
+													+ " " + target.getName());
 								}
 							}
 

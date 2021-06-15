@@ -15,6 +15,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -39,6 +40,21 @@ public class Listeners implements Listener {
 	}
 
 	@EventHandler
+	public void onLogin(PlayerLoginEvent e) {
+
+		if (HerobrinePVPCore.getFileManager().isUserRegistered(e.getPlayer())) {
+
+			System.out.println("CONNECTION WITH IP:" + e.getRealAddress());
+
+			String ip = e.getRealAddress().toString().replaceAll("/", "");
+
+			HerobrinePVPCore.getFileManager().updateIP(e.getPlayer(), ip);
+
+		}
+
+	}
+
+	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 
 		Player player = e.getPlayer();
@@ -49,28 +65,32 @@ public class Listeners implements Listener {
 		selector.setItemMeta(selectorMeta);
 		player.setHealth(20.0);
 		player.setGameMode(GameMode.SURVIVAL);
+
 		for (PotionEffect effect : player.getActivePotionEffects()) {
 
 			player.removePotionEffect(effect.getType());
 		}
-		if (!player.hasPlayedBefore()) {
-			HerobrinePVPCore.getFileManager().setRank(player.getUniqueId(), Ranks.MEMBER);
+		if (!player.hasPlayedBefore() || !HerobrinePVPCore.getFileManager().isUserRegistered(player)) {
+			HerobrinePVPCore.getFileManager().registerUser(player);
 
 			player.getInventory().setItem(0, selector);
 			player.updateInventory();
-			HerobrinePVPCore.getFileManager().setCoins(player, 0);
-			HerobrinePVPCore.getFileManager().setTrophies(player, 0);
-			HerobrinePVPCore.getFileManager().setPlusColor(player, ChatColor.LIGHT_PURPLE);
+
 			e.setJoinMessage(ChatColor.GRAY + "Welcome to Herobrine PVP, " + ChatColor.GOLD + player.getName()
 					+ ChatColor.GRAY + "!" + "\n" + ChatColor.GRAY + "[" + ChatColor.GREEN + "+" + ChatColor.GRAY + "] "
 					+ ChatColor.GRAY + player.getName());
-
+			HerobrinePVPCore.getFileManager().updateLastJoin(player);
 		} else {
 
 			if (HerobrinePVPCore.getFileManager().getPlusColor(player.getUniqueId()) == null) {
 				HerobrinePVPCore.getFileManager().setPlusColor(player, ChatColor.LIGHT_PURPLE);
 			}
 
+			if (player.getName() != HerobrinePVPCore.getFileManager().getNameFromUUID(player.getUniqueId())) {
+				HerobrinePVPCore.getFileManager().updatePlayerNames(player);
+			}
+
+			HerobrinePVPCore.getFileManager().updateLastJoin(player);
 			player.getInventory().clear();
 			player.getEquipment().setHelmet(null);
 			player.getEquipment().setChestplate(null);
@@ -125,6 +145,7 @@ public class Listeners implements Listener {
 		e.setQuitMessage(ChatColor.GRAY + "[" + ChatColor.RED + "-" + ChatColor.GRAY + "] " + ChatColor.GRAY
 				+ e.getPlayer().getName());
 		e.getPlayer().getEnderChest().clear();
+		HerobrinePVPCore.getFileManager().updateLastDisconnect(e.getPlayer());
 		if (HerobrinePVPCore.getFileManager().getRank(e.getPlayer()).getPermLevel() >= 6) {
 			for (Player players : Bukkit.getOnlinePlayers()) {
 				if (HerobrinePVPCore.getFileManager().getRank(players).equals(Ranks.OWNER)

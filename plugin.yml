@@ -54,4 +54,11 @@ commands:
   mutechat:
     description: Mutes chat globally across the whole server!
   songtest:
-    description: Play a test song to yourself!                           
+    description: Play a test song to yourself!
+  rename:
+    description: Rename the item you're holding. Compatible with color codes!
+  shop:
+    description: Access/Manage the shop for kits, cosmetics, and more!
+  hologram:
+    description: Create/Manage hologram messages!
+    aliases: [holograms]                                 
